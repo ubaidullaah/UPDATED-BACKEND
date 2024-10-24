@@ -3,3 +3,6 @@ uvicorn
 sqlalchemy
 psycopg2-binary
 pdfplumber
+PyPDF2
+python-docx
+textract
