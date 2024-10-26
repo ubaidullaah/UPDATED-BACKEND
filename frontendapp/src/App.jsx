@@ -5,6 +5,7 @@ import SignUpPage from './pages/SignUpPage';
 import ContactPage from './pages/ContactPage';
 import AboutPage from './pages/AboutPage';
 import Home from './pages/Home';
+import ShortlistedCandidatesPage from "./pages/ShortlistedCandidatesPage";
 import ResumeUpload from './pages/ResumeUpload'; // Importing the ResumeUpload component
 import CandidatesList from './pages/CandidatesList'; // Import the new CandidatesList component
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/candidates" element={<CandidatesList />} /> {/* Add the CandidatesList route */}
 
         <Route path="/resume-upload" element={<ResumeUpload />} /> {/* Adding the ResumeUpload route */}
+        <Route path="/shortlisted-candidates" element={<ShortlistedCandidatesPage />} />
       </Routes>
     </Router>
   );
