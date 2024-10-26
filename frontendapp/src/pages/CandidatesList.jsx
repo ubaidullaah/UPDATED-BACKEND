@@ -24,7 +24,7 @@ const CandidatesList = () => {
       {candidates.length === 0 ? (
         <p className="text-gray-500 text-lg">No candidates found.</p>
       ) : (
-        <div className="space-y-8"> {/* Changed from grid to a vertical space between items */}
+        <div className="space-y-8"> {/* Changed from grid to a vertical space between items */} 
           {candidates.map(candidate => (
             <div
               key={candidate.id}
@@ -35,6 +35,9 @@ const CandidatesList = () => {
                 <h3 className="text-2xl font-semibold text-gray-800">
                   {candidate.name}
                 </h3>
+              </div>
+              <div className="flex justify-between items-center mb-4">
+                <p className="text-gray-500 text-sm">AI Score: <span className="font-semibold text-gray-800">{candidate.score}</span></p>
               </div>
               <div className="text-gray-700 whitespace-pre-line leading-relaxed">
                 {candidate.resume_text}

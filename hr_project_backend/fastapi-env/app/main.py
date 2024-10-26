@@ -2,9 +2,11 @@ from fastapi import FastAPI, Depends, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from .database import engine, Base, get_db
-from .models import Candidate
+from .models import Candidate, JobDescription
 from .parsers import parse_pdf, parse_doc
-from .schemas import CandidateCreate, CandidateOut
+from .ai_scoring import calculate_ai_score
+
+from .schemas import CandidateCreate, CandidateOut, JobDescriptionCreate, JobDescriptionOut
 
 Base.metadata.create_all(bind=engine)
 
@@ -19,8 +21,19 @@ app.add_middleware(
     allow_headers=["*"],  # Allow all headers
 )
 
+
+
+# Endpoint to add a job description
+@app.post("/add_job_description", response_model=JobDescriptionOut)
+def add_job_description(job: JobDescriptionCreate, db: Session = Depends(get_db)):
+    new_job = JobDescription(**job.dict())
+    db.add(new_job)
+    db.commit()
+    db.refresh(new_job)
+    return new_job
+
 @app.post("/upload_resume", response_model=CandidateOut)
-def upload_resume(file: UploadFile = File(...), db: Session = Depends(get_db)):
+def upload_resume(file: UploadFile = File(...), job_description_id: int = None, db: Session = Depends(get_db)):
     allowed_content_types = [
         "application/pdf",
         "application/msword",
@@ -29,6 +42,11 @@ def upload_resume(file: UploadFile = File(...), db: Session = Depends(get_db)):
     
     if file.content_type not in allowed_content_types:
         raise HTTPException(status_code=400, detail="Only PDF, DOC, and DOCX files are supported.")
+    
+    # Get the job description from the database
+    job_description = db.query(JobDescription).filter(JobDescription.id == job_description_id).first()
+    if not job_description:
+        raise HTTPException(status_code=404, detail="Job description not found.")
 
     # Parse the resume based on file type
     if file.content_type == "application/pdf":
@@ -38,7 +56,15 @@ def upload_resume(file: UploadFile = File(...), db: Session = Depends(get_db)):
     else:
         raise HTTPException(status_code=400, detail="Unsupported file format")
 
-    candidate = Candidate(name=file.filename, resume_text=resume_text)
+    # Calculate the AI score
+    ai_score = calculate_ai_score(resume_text, job_description.description_text)
+
+    candidate = Candidate(
+        name=file.filename, 
+        resume_text=resume_text, 
+        job_description_id=job_description_id, 
+        score=ai_score
+    )
     
     db.add(candidate)
     db.commit()
