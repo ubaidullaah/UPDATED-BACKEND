@@ -1,37 +1,22 @@
 import React from 'react';
-import backgroundImage from '../assets/background.jpg'; 
-import logo from '../assets/logo.jpg'; 
+import backgroundImage from '../assets/background2.jpg';
 import { Link, useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    // Add your login logic here, if necessary
     navigate('/home'); // Redirect to Home page
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="h-screen overflow-hidden flex flex-col">
       {/* Navigation Bar */}
-      <nav className="p-4 fixed top-0 left-0 w-full z-50" style={{ backgroundColor: '#6A0DAD' }}>
-        <div className="container mx-auto flex justify-between items-center">
-          {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <img src={logo} alt="Company Logo" className="h-8 w-8" />
-          </div>
-
-          {/* Navigation Links */}
-          <div className="flex space-x-8 text-white" style={{ fontSize: 'calc(1.125rem + 2px)', fontFamily: 'Poppins, sans-serif' }}>
-            <Link to="/home" className="hover:text-gray-300">Home</Link>
-            <Link to="/about" className="hover:text-gray-300">About</Link>
-            <Link to="/contact" className="hover:text-gray-300">Contact</Link>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Main Content Section */}
-      <div className="flex flex-1 pt-16 relative">
+      <div className="flex flex-1 relative">
         {/* Full-screen Background Image */}
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -41,58 +26,58 @@ const LoginPage = () => {
         />
 
         {/* Left Section with Login Form */}
-        <div className="relative z-10 w-full md:w-1/2 flex items-center justify-center min-h-screen" style={{ marginLeft: '-48px' }}>
-          <div className="bg-[#F0F0F5] p-8 shadow-lg rounded-lg max-w-sm w-full">
-            <h2 className="text-3xl font-bold mb-6 text-center" style={{ color: '#6A0DAD', fontFamily: 'Poppins, sans-serif', letterSpacing: '0.5px' }}>Log in</h2>
+        <div className="relative z-10 w-full md:w-1/2 flex items-center justify-center min-h-screen">
+          <div
+            className="bg-white p-8 shadow-lg rounded-lg max-w-sm w-full"
+            style={{
+              transform: 'scale(0.8)',
+              marginLeft: '-1in', // Reduced left margin to half of the previous value
+            }}
+          >
+            <h2 className="text-3xl font-bold mb-6 text-left" style={{ color: '#000000' }}>Log in</h2>
             <form>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email" style={{ fontFamily: 'Roboto, sans-serif', fontSize: '16px' }}>
-                  Your email
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                  Email
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                   id="email"
                   type="email"
                   placeholder="name@example.com"
-                  style={{ fontFamily: 'Roboto, sans-serif', fontSize: '14px', lineHeight: '1.5' }}
+                  style={{ backgroundColor: '#ffffff', color: '#333333' }}
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password" style={{ fontFamily: 'Roboto, sans-serif', fontSize: '16px' }}>
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
                   Password
                 </label>
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border border-gray-300 rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                   id="password"
                   type="password"
-                  placeholder="*********"
-                  style={{ fontFamily: 'Roboto, sans-serif', fontSize: '14px', lineHeight: '1.5' }}
+                  placeholder="***"
+                  style={{ backgroundColor: '#ffffff', color: '#333333' }}
                 />
               </div>
               <div className="flex items-center justify-between mb-4">
-                <a
-                  className="text-sm text-[#6A0DAD] hover:text-purple-800"
-                  href="#"
-                  style={{ fontFamily: 'Poppins, sans-serif', fontWeight: '500' }}
-                >
-                  Forgot your password? Click here
-                </a>
+                <span style={{ color: '#000000' }}>Forgot your password? <a href="resetpassword" style={{ color: '#0000ff' }}>Reset here</a></span>
               </div>
               <div className="mb-6">
                 <button
-                  className="bg-[#FFD700] hover:bg-[#FFB300] text-white font-bold py-2 px-4 w-full rounded focus:outline-none focus:shadow-outline"
+                  className="hover:bg-gray-800 text-white font-bold py-2 px-4 w-full rounded focus:outline-none focus:shadow-outline"
                   type="button"
                   onClick={handleLogin}
-                  style={{ fontFamily: 'Poppins, sans-serif', fontSize: '16px' }}
+                  style={{ backgroundColor: '#000000' }}
                 >
                   LOGIN
                 </button>
               </div>
-              <div className="text-center">
-                <span style={{ fontFamily: 'Roboto, sans-serif', fontSize: '14px' }}>Don’t have an account? </span>
-                <Link to="/signup" className="text-[#6A0DAD] hover:text-purple-800 font-bold" style={{ fontFamily: 'Poppins, sans-serif' }}>
-                  Sign up
-                </Link> 
+              <div className="flex items-center justify-start">
+                <span style={{ color: '#000000' }}>Don’t have an account?&nbsp;</span>
+                <Link to="/signup" className="font-normal" style={{ color: '#0000ff' }}>
+                  Register here
+                </Link>
               </div>
             </form>
           </div>
