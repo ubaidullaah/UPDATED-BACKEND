@@ -90,10 +90,10 @@ const ResumeUploadPage = () => {
       <Navbarapp />
 
       {/* Main Content Section */}
-      <div className="flex flex-1">
-        {/* Sidebar with same top margin */}
-        <div className="mt-12">
-          <Sidebar />
+      <div className="flex flex-1 h-full">
+        {/* Sidebar with full height */}
+        <div className="h-full">
+          <Sidebar className="min-h-full h-full" /> {/* Ensure the sidebar takes full height */}
         </div>
 
         {/* Main Content Area */}
